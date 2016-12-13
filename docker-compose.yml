@@ -1,0 +1,23 @@
+version: '2'
+
+services:
+    rabbit:
+        image: rabbitmq
+    user_service:
+        build: './user_service'
+        ports:
+            - "4000:4000"
+        depends_on:
+            - rabbit
+    piwik_service:
+        build: './piwik_service'
+        ports:
+            - "5000"
+        depends_on:
+            - rabbit
+    email_service:
+        build: './email_service'
+        ports:
+            - "5001"
+        depends_on:
+            - rabbit
