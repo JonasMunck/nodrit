@@ -1,7 +1,7 @@
-nodrit
+Nodrit
 ======
 
-_Noderit is a combination of node and rabbit(mq)_
+_Nodrit is a combination of node and rabbit(mq)_
 
 
 This repo is for testing event based messaging system using 
@@ -11,7 +11,7 @@ rabbit and mulitplie node services, all in docker.
 
 There is one "sender" service, `user_service`, which exposes
 an endpoint `http://<docker-ip>:4000`. On a request it will emit
-the event `new_user_created` on the rabbit exchange `user`.
+the event `new_user_created` on the rabbit exchange `users`.
 
 The other services - email and piwik - emulates recieving services.
 They listen on the `users` exchage and processes the messages published there.
@@ -55,7 +55,8 @@ docker-compose up -d
 docker-compose scale email_service=3
 docker-compose logs  # to see which services that pick up events from bus
 
-# in another terminal instance
+**In another terminal instance**
+
 curl http://$(docker-machine ip):4000  # will post event
 ```
 
@@ -69,7 +70,7 @@ docker-compose scale piwik_service=3
 docker-compose logs  # to see which services that pick up events from bus
 ```
 
-# example output
+## Example Output
 
 ```
 user_service_1  | sent new_user_created
@@ -82,3 +83,10 @@ piwik_service_2 | new_user_created
 piwik_service_3 | new_user_created
 piwik_service_1 | new_user_created
 ```
+
+### A Quick Proof of Concept
+
+I just threw this thing together very fast to test some concepts, mostly Docker <-> rabbit <-> node.
+Efficient and stable code is not priotized ;)
+
+Enjoy!
